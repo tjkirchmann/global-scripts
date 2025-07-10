@@ -65,6 +65,15 @@ echo "✅ Installed core data analysis packages"
 mkdir -p data/{raw,processed}
 echo "📊 Created data directory structure"
 
+# Copy custom toolbox
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -d "$SCRIPT_DIR/tys-toolbox" ]; then
+    cp -r "$SCRIPT_DIR/tys-toolbox" ./
+    echo "🧰 Copied custom toolbox"
+else
+    echo "⚠️  Warning: tys-toolbox not found in $SCRIPT_DIR"
+fi
+
 # Create .gitignore
 cat > .gitignore << 'EOF'
 # Byte-compiled / optimized / DLL files
@@ -182,6 +191,9 @@ cat > main.ipynb << 'EOF'
     "import seaborn as sns\n",
     "import plotly.express as px\n",
     "import plotly.graph_objects as go\n",
+    "\n",
+    "# Custom toolbox imports\n",
+    "from tys_toolbox import *\n",
     "\n",
     "# Utilities\n",
     "import os\n",
